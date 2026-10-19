@@ -3,7 +3,7 @@
 - RM 561503 Enzo Quarelo  
 - RM 563186 Jose Otavio Kaneto  
 - RM 563245 Nicolas Baradel
-- RM 562499 
+- RM 562499 João Pedro Sassarrão de Carvalho
 # Rota mínima com Dijkstra
 
 Aplicação em Python + Streamlit que encontra a menor rota entre dois pontos de uma
