@@ -74,6 +74,17 @@ class Report(FPDF):
         self.ln(2)
 
 
+def group_members():
+    """Members listed under '# Grupo' in README.md, kept in one place."""
+    members, inside = [], False
+    for line in (HERE / "README.md").read_text(encoding="utf-8").splitlines():
+        if line.startswith("#"):
+            inside = line.strip() == "# Grupo"
+        elif inside and line.startswith("- "):
+            members.append(line[2:].strip())
+    return members
+
+
 def justification(origin, target, distance):
     """Brute force over every simple path: proves the Dijkstra distance is the minimum."""
     paths = sorted(simple_paths(create_graph(EDGES), origin, target), key=lambda item: item[1])
@@ -91,6 +102,12 @@ def build():
     pdf.set_font("Helvetica", "I", 11)
     pdf.cell(0, 7, latin1("Trânsito entre pontos de uma cidade — relatório de testes"),
              new_x="LMARGIN", new_y="NEXT", align="C")
+    pdf.ln(2)
+    pdf.set_font("Helvetica", "B", 10)
+    pdf.cell(0, 6, "Grupo", new_x="LMARGIN", new_y="NEXT", align="C")
+    pdf.set_font("Helvetica", size=10)
+    for member in group_members():
+        pdf.cell(0, 5, latin1(member), new_x="LMARGIN", new_y="NEXT", align="C")
 
     pdf.heading("1. Problema e modelagem")
     pdf.paragraph(
